@@ -1,6 +1,7 @@
 import { useState } from "react";
 
 import { pokemonApi } from "redux-utils";
+import { useNumFormatter } from "hooks-and-utils";
 
 const { useGetPokemonByNameQuery } = pokemonApi;
 
@@ -19,6 +20,10 @@ const opts = [
 
 export default function Docs() {
   const [name, setName] = useState("");
+  const [num, setNum] = useState(1000);
+
+  const { format } = useNumFormatter();
+
   const { data, isFetching, isError, isSuccess } = useGetPokemonByNameQuery(
     name,
     {
@@ -29,6 +34,21 @@ export default function Docs() {
   return (
     <div>
       <h1>Docs</h1>
+
+      <hr />
+
+      <input
+        value={num}
+        onChange={(e) => setNum(+e.target.value)}
+        type="number"
+        placeholder="1000"
+        className="m-1 inline-block rounded-sm border p-2 "
+      />
+
+      <p>
+        Formatted value <strong>{format({ number: num })}</strong>
+      </p>
+
       <select
         className="my-2 capitalize"
         value={name}
