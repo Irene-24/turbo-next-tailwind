@@ -3,6 +3,6 @@ module.exports = {
   swcMinify: true,
 
   experimental: {
-    transpilePackages: ["ui"],
+    transpilePackages: ["ui", "redux-utils", "hooks-and-utils"],
   },
 };
