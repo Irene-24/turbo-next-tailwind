@@ -46,5 +46,5 @@ COPY --from=installer /app/apps/web/package.json .
 COPY --from=installer --chown=nextjs:nodejs /app/apps/web/.next/standalone ./
 COPY --from=installer --chown=nextjs:nodejs /app/apps/web/.next/static ./apps/web/.next/static
 
-EXPOSE 3000
-CMD ["yarn", "start"]
+
+CMD node apps/web/server.js
