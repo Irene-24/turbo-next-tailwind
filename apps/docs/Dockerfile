@@ -44,5 +44,4 @@ COPY --from=installer /app/apps/docs/package.json .
 COPY --from=installer --chown=nextjs:nodejs /app/apps/docs/.next/standalone ./
 COPY --from=installer --chown=nextjs:nodejs /app/apps/docs/.next/static ./apps/docs/.next/static
 
-EXPOSE 3001
-CMD ["yarn", "start"]
+CMD node apps/docs/server.js
