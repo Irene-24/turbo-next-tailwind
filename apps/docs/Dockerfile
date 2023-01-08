@@ -24,9 +24,9 @@ COPY --from=builder /app/out/yarn.lock ./yarn.lock
 RUN yarn install
 
 # # Build the project
-# COPY --from=builder /app/out/full/ .
-# COPY turbo.json turbo.json
-# RUN yarn turbo run build --filter=docs...
+COPY --from=builder /app/out/full/ .
+COPY turbo.json turbo.json
+RUN yarn turbo run build --filter=docs...
 
 # FROM node:16.14-alpine AS runner
 # WORKDIR /app
