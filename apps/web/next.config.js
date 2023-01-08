@@ -2,7 +2,6 @@ const path = require("path");
 
 module.exports = {
   reactStrictMode: true,
-  swcMinify: true,
   output: "standalone",
 
   experimental: {

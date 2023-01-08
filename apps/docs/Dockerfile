@@ -23,25 +23,27 @@ COPY --from=builder /app/out/json/ .
 COPY --from=builder /app/out/yarn.lock ./yarn.lock
 RUN yarn install
 
-# Build the project
-COPY --from=builder /app/out/full/ .
-COPY turbo.json turbo.json
-RUN yarn turbo run build --filter=docs...
+# # Build the project
+# COPY --from=builder /app/out/full/ .
+# COPY turbo.json turbo.json
+# RUN yarn turbo run build --filter=docs...
 
-FROM node:16.14-alpine AS runner
-WORKDIR /app
+# FROM node:16.14-alpine AS runner
+# WORKDIR /app
 
-# Don't run production as root
-RUN addgroup --system --gid 1001 nodejs
-RUN adduser --system --uid 1001 nextjs
-USER nextjs
+# # Don't run production as root
+# RUN addgroup --system --gid 1001 nodejs
+# RUN adduser --system --uid 1001 nextjs
+# USER nextjs
 
-COPY --from=installer /app/apps/docs/next.config.js .
-COPY --from=installer /app/apps/docs/package.json .
+# COPY --from=installer /app/apps/docs/next.config.js .
+# COPY --from=installer /app/apps/docs/package.json .
 
-# Automatically leverage output traces to reduce image size
-# https://nextjs.org/docs/advanced-features/output-file-tracing
-COPY --from=installer --chown=nextjs:nodejs /app/apps/docs/.next/standalone ./
-COPY --from=installer --chown=nextjs:nodejs /app/apps/docs/.next/static ./apps/docs/.next/static
+# # Automatically leverage output traces to reduce image size
+# # https://nextjs.org/docs/advanced-features/output-file-tracing
+# COPY --from=installer --chown=nextjs:nodejs /app/apps/docs/.next/standalone ./
+# COPY --from=installer --chown=nextjs:nodejs /app/apps/docs/.next/static ./apps/docs/.next/static
 
-CMD node apps/docs/server.js
+# CMD node apps/docs/server.js
+
+CMD ["yarn", "turbo", "run", "start", "--filter=docs"]
